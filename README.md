@@ -28,5 +28,6 @@ Find more about YAML:
 
 ## Commands
 
+- mission ls - Lists all missions
 - mission new - Adds a new mission
 - mission help - Shows the help
