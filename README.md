@@ -2,6 +2,8 @@
 
 A CLI to administer a log file of missions.
 
+![Screenshot](screenshot.jpg)
+
 ## Requirements
 
 - [Go](https://go.dev/)
