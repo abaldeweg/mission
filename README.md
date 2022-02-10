@@ -13,7 +13,7 @@ First, you need to install [Go](https://go.dev/).
 
 Download the project archive from the [git repository](https://github.com/abaldeweg/mission).
 
-Inside the project directory, you can build the app with `go build` command.
+Inside the project directory, you can build the app with the `go build` command.
 
 Run the command `mission`. Depending on the OS you need to add a file extension.
 
@@ -23,7 +23,7 @@ The `missions.yaml` file will be created in your home directory. Please, keep th
 
 Find more about YAML:
 
-- [https://yaml.org/](https://yaml.org/)
+- [yaml.org](https://yaml.org/)
 - [Wikipedia](https://en.m.wikipedia.org/wiki/YAML)
 
 ## Commands
