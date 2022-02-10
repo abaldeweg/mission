@@ -1,9 +1,10 @@
 package create
 
 import (
-    "fmt"
-    "log"
-    "baldeweg/mission/logfile"
+	"baldeweg/mission/logfile"
+	"fmt"
+	"log"
+	"time"
 )
 
 func init() {
@@ -12,16 +13,14 @@ func init() {
 }
 
 func Create() {
-    logfile.WriteFile(logfile.Path(), addContent(logfile.ReadFile(logfile.Path())))
-    fmt.Printf("A new mission was created. Edit the details in the log file %s.\n", logfile.Path())
-}
+    create := logfile.Mission{
+        Date: time.Now().Format("2006-01-02"),
+        Time: time.Now().Format("15:04"),
+    }
 
-func addContent(file []byte) []byte {
-    t := logfile.ParseYAML(file)
-
-    create := logfile.Mission{Date: "123", Links: []string{"url"}}
-
+    t := logfile.ParseYAML(logfile.ReadLogfile())
     t.Missions = append(t.Missions, create)
 
-    return logfile.WriteYAML(t)
+    logfile.WriteLogfile(logfile.WriteYAML(t))
+    fmt.Printf("A new mission was created. Edit the details in the log file %s.\n", logfile.Path())
 }

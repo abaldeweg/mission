@@ -1,12 +1,13 @@
 package logfile
 
 import (
-    "os"
-    "log"
-    "gopkg.in/yaml.v3"
+	"log"
+	"os"
+
+	"gopkg.in/yaml.v3"
 )
 
-type MissionsLog struct {
+type Logfile struct {
     Missions []Mission
 }
 
@@ -19,8 +20,13 @@ type Mission struct {
     Links []string
 }
 
-func ParseYAML(d []byte) MissionsLog {
-    t := MissionsLog{}
+func init() {
+    log.SetPrefix("logfile: ")
+    log.SetFlags(0)
+}
+
+func ParseYAML(d []byte) Logfile {
+    t := Logfile{}
 
     err := yaml.Unmarshal([]byte(d), &t)
     if err != nil {
@@ -30,7 +36,7 @@ func ParseYAML(d []byte) MissionsLog {
     return t
 }
 
-func WriteYAML(t MissionsLog) []byte {
+func WriteYAML(t Logfile) []byte {
     d, err := yaml.Marshal(t)
     if err != nil {
         log.Fatalf("error: %v", err)
@@ -39,24 +45,23 @@ func WriteYAML(t MissionsLog) []byte {
     return d
 }
 
-func IsFile(config string) bool {
-    if _, err := os.Stat(config); err == nil {
+func HasLogfile() bool {
+    if _, err := os.Stat(Path()); err == nil {
         return true
     }
 
     return false
 }
 
-func WriteFile(file string, content []byte) {
-    d := []byte(content)
-    err := os.WriteFile(file, d, 0644)
+func WriteLogfile(content []byte) {
+    err := os.WriteFile(Path(), content, 0644)
     if err != nil {
         log.Fatal(err)
     }
 }
 
-func ReadFile(config string) []byte {
-    data, err := os.ReadFile(config)
+func ReadLogfile() []byte {
+    data, err := os.ReadFile(Path())
     if err != nil {
         log.Fatal(err)
     }

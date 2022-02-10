@@ -1,10 +1,10 @@
 package main
 
 import (
-    "fmt"
-    "os"
-    "baldeweg/mission/create"
-    "baldeweg/mission/logfile"
+	"baldeweg/mission/create"
+	"baldeweg/mission/logfile"
+	"fmt"
+	"os"
 )
 
 var data = `
@@ -12,8 +12,8 @@ missions:
 `
 
 func main() {
-    if !logfile.IsFile(logfile.Path()) {
-        logfile.WriteFile(logfile.Path(), logfile.WriteYAML(logfile.ParseYAML([]byte(data))))
+    if !logfile.HasLogfile() {
+        logfile.WriteLogfile(logfile.WriteYAML(logfile.ParseYAML([]byte(data))))
     }
 
     action := "new"
