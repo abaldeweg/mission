@@ -2,11 +2,12 @@ package html
 
 import (
 	"baldeweg/mission/logfile"
-	"fmt"
 	"html/template"
 	"log"
 	"os"
 	"time"
+
+	"github.com/fatih/color"
 )
 
 const tpl = `<!DOCTYPE html>
@@ -45,7 +46,9 @@ func Export() {
 		Missions: missions.Missions,
 	})
 
-    fmt.Printf("Wrote the HTML to %s\n", getUrl())
+    success := color.New(color.FgGreen)
+    success.Println("HTML export was successfull")
+    success.Printf("File: %s\n", getUrl())
 }
 
 func render(data T) {

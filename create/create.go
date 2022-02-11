@@ -2,9 +2,10 @@ package create
 
 import (
 	"baldeweg/mission/logfile"
-	"fmt"
 	"log"
 	"time"
+
+	"github.com/fatih/color"
 )
 
 func init() {
@@ -22,5 +23,8 @@ func Create() {
     t.Missions = append(t.Missions, create)
 
     logfile.WriteLogfile(logfile.WriteYAML(t))
-    fmt.Printf("A new mission was created. Edit the details in the log file %s.\n", logfile.Path())
+
+    success := color.New(color.FgGreen)
+    success.Println("A new mission was created.")
+    success.Printf("File: %s.\n", logfile.Path())
 }
