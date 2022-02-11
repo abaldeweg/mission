@@ -32,4 +32,5 @@ Find more about YAML:
 
 - mission ls - Lists all missions
 - mission new - Adds a new mission
+- mission html - Exports the missions to an HTML file
 - mission help - Shows the help

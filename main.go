@@ -2,6 +2,7 @@ package main
 
 import (
 	"baldeweg/mission/create"
+	"baldeweg/mission/html"
 	"baldeweg/mission/list"
 	"baldeweg/mission/logfile"
 	"fmt"
@@ -27,12 +28,15 @@ func main() {
         list.List()
     case "new":
         create.Create()
+    case "html":
+        html.Export()
     case "help":
         fmt.Println("baldeweg/mission")
         fmt.Println("")
         fmt.Println("Commands")
         fmt.Println("mission ls - Lists all missions")
         fmt.Println("mission new - Adds a new mission")
+        fmt.Println("mission html - Exports the missions to an HTML file")
         fmt.Println("mission help - Shows the help")
     default:
         list.List()
