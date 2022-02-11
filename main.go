@@ -10,6 +10,7 @@ import (
 )
 
 var data = `
+vars:
 missions:
 `
 

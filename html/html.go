@@ -21,7 +21,7 @@ const tpl = `<!DOCTYPE html>
     <h1>{{ .Title }}</h1>
     <ul>
         {{- range .Missions -}}
-        <li>{{ formatDate .Date }} {{ .Time }} {{ .Unit }}: {{ .Situation }}, {{ .Location }}</li>
+        <li>{{ formatDate .Date }} {{ .Time }} {{ getUnit .Unit }}: {{ .Situation }}, {{ .Location }}</li>
         {{- end -}}
     </ul>
 </body>
@@ -54,6 +54,7 @@ func Export() {
 func render(data T) {
     t, err := template.New("export").Funcs(template.FuncMap{
         "formatDate": formatDate,
+        "getUnit": getUnit,
     }).Parse(tpl)
 	if err != nil {
 		log.Fatalf("error: %v", err)
@@ -77,6 +78,12 @@ func formatDate(val string) string {
     }
 
     return t.Format("02.01.2006")
+}
+
+func getUnit(val string) string {
+    missions := logfile.ParseYAML(logfile.ReadLogfile())
+
+    return missions.Vars[val]
 }
 
 func getUrl() string {
