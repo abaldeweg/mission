@@ -1,10 +1,10 @@
 package main
 
 import (
-	"baldeweg/mission/create"
-	"baldeweg/mission/html"
-	"baldeweg/mission/list"
-	"baldeweg/mission/logfile"
+	"baldeweg/mission/commands/create"
+	"baldeweg/mission/commands/html"
+	"baldeweg/mission/commands/list"
+	"baldeweg/mission/db/logfile"
 	"fmt"
 	"os"
 )

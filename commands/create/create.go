@@ -1,7 +1,7 @@
 package create
 
 import (
-	"baldeweg/mission/logfile"
+	"baldeweg/mission/db/logfile"
 	"log"
 	"time"
 

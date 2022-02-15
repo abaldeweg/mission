@@ -1,7 +1,7 @@
 package html
 
 import (
-	"baldeweg/mission/logfile"
+	"baldeweg/mission/db/logfile"
 	"html/template"
 	"log"
 	"os"
