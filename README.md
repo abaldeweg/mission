@@ -15,7 +15,7 @@ First, you need to install [Go](https://go.dev/).
 
 Download the project archive from the [git repository](https://github.com/abaldeweg/mission).
 
-Inside the project directory, you can build the app with the `go build` command.
+Inside the project directory, you can build the app with the `go build` command. If you have [GoReleaser](https://goreleaser.com/) installer, instead run `goreleaser build --snapshot --rm-dist`.
 
 Run the command `mission`. Depending on the OS you need to add a file extension.
 
