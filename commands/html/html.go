@@ -21,7 +21,7 @@ const tpl = `<!DOCTYPE html>
     <h1>{{ .Title }}</h1>
     <ul>
         {{- range .Missions -}}
-        <li>{{ formatDate .Date }} {{ .Time }} {{ getUnit .Unit }}: {{ .Situation }}, {{ .Location }}</li>
+        <li>{{ formatDate .Date }} {{ getUnit .Unit }}: {{ .Situation }}, {{ .Location }}</li>
         {{- end -}}
     </ul>
 </body>
