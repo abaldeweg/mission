@@ -5,4 +5,5 @@ tasks:
 
 vscode:
   extensions:
+    - eamodio.gitlens
     - premparihar.gotestexplorer
