@@ -5,4 +5,4 @@ tasks:
 
 vscode:
   extensions:
-    - premparihar.gotestexplorer@0.1.10
+    - premparihar.gotestexplorer
