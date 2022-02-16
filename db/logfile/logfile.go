@@ -15,6 +15,7 @@ type Logfile struct {
 type Mission struct {
     Date string
     Time string
+    Keyword string
     Situation string
     Unit string
     Location string
