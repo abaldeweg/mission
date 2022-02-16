@@ -5,5 +5,7 @@ tasks:
 
 vscode:
   extensions:
-    - eamodio.gitlens
-    - premparihar.gotestexplorer
+    - editorconfig.editorconfig
+    - golang.go
+
+
