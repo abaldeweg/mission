@@ -32,8 +32,8 @@ func main() {
     }
 
     action := "ls"
-    if len(os.Args) >= 2 {
-        action = os.Args[1]
+    if len(flag.Args()) >= 1 {
+        action = flag.Args()[0]
     }
 
     switch action {
