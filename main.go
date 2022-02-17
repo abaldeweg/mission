@@ -50,6 +50,8 @@ func main() {
         html.Export()
     case "help":
         fmt.Println("baldeweg/mission")
+        fmt.Println("A baldeweg OpenSource project")
+        fmt.Println("https://github.com/abaldeweg/mission")
         fmt.Println("")
         fmt.Println("Commands")
         fmt.Println("mission ls - Lists all missions")
