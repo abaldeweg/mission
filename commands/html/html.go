@@ -87,10 +87,5 @@ func getUnit(val string) string {
 }
 
 func getUrl() string {
-    home, err := os.UserHomeDir()
-    if err != nil {
-        log.Fatal(err)
-    }
-
-    return home + "/missions.html"
+    return logfile.GetPath() + "/missions.html"
 }

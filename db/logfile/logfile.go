@@ -22,9 +22,29 @@ type Mission struct {
     Links []string
 }
 
+var path string
+
 func init() {
     log.SetPrefix("logfile: ")
     log.SetFlags(0)
+}
+
+func SetPath(dir string) {
+    _, err := os.Stat(dir)
+    if err != nil {
+        log.Fatal(err)
+    }
+    if err == nil {
+        path = dir
+    }
+}
+
+func GetPath() string {
+    return path
+}
+
+func GetUrl() string {
+    return GetPath() + "/missions.yaml"
 }
 
 func ParseYAML(d []byte) Logfile {
@@ -48,7 +68,7 @@ func WriteYAML(t Logfile) []byte {
 }
 
 func HasLogfile() bool {
-    if _, err := os.Stat(Path()); err == nil {
+    if _, err := os.Stat(GetUrl()); err == nil {
         return true
     }
 
@@ -56,26 +76,17 @@ func HasLogfile() bool {
 }
 
 func WriteLogfile(content []byte) {
-    err := os.WriteFile(Path(), content, 0644)
+    err := os.WriteFile(GetUrl(), content, 0644)
     if err != nil {
         log.Fatal(err)
     }
 }
 
 func ReadLogfile() []byte {
-    data, err := os.ReadFile(Path())
+    data, err := os.ReadFile(GetUrl())
     if err != nil {
         log.Fatal(err)
     }
 
     return data
-}
-
-func Path() string {
-    home, err := os.UserHomeDir()
-    if err != nil {
-        log.Fatal(err)
-    }
-
-    return home + "/missions.yaml"
 }

@@ -5,7 +5,9 @@ import (
 	"baldeweg/mission/commands/html"
 	"baldeweg/mission/commands/list"
 	"baldeweg/mission/db/logfile"
+	"flag"
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -14,7 +16,22 @@ vars:
 missions:
 `
 
+var dir string
+
+func init() {
+    path, err := os.Getwd()
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    flag.StringVar(&dir, "path", path, "Specify the directory where the data should be stored.")
+}
+
 func main() {
+    flag.Parse()
+
+    logfile.SetPath(dir)
+
     if !logfile.HasLogfile() {
         logfile.WriteLogfile(logfile.WriteYAML(logfile.ParseYAML([]byte(data))))
     }
