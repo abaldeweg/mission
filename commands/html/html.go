@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"log"
 	"os"
+	"path"
 	"time"
 
 	"github.com/fatih/color"
@@ -87,5 +88,5 @@ func getUnit(val string) string {
 }
 
 func getUrl() string {
-    return logfile.GetPath() + "/missions.html"
+    return path.Join(logfile.GetPath(), "missions.html")
 }

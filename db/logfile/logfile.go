@@ -3,6 +3,7 @@ package logfile
 import (
 	"log"
 	"os"
+	"path"
 
 	"gopkg.in/yaml.v3"
 )
@@ -27,29 +28,29 @@ replacements:
 missions:
 `
 
-var path string
+var dir string
 
 func init() {
     log.SetPrefix("logfile: ")
     log.SetFlags(0)
 }
 
-func SetPath(dir string) {
-    _, err := os.Stat(dir)
+func SetPath(d string) {
+    _, err := os.Stat(d)
     if err != nil {
         log.Fatal(err)
     }
     if err == nil {
-        path = dir
+        dir = d
     }
 }
 
 func GetPath() string {
-    return path
+    return dir
 }
 
 func GetUrl() string {
-    return GetPath() + "/missions.yaml"
+    return path.Join(GetPath(), "missions.yaml")
 }
 
 func ParseYAML(d []byte) Logfile {
