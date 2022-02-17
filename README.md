@@ -21,7 +21,7 @@ Run the command `mission`. Depending on the OS you need to add a file extension.
 
 The app will create a log file and add a template for every new mission. The details needs to be added to the `missions.yaml` directly via an editor.
 
-The `missions.yaml` file will be created in your home directory. Please, keep the indentation - that's very important for YAML to work correctly.
+The `missions.yaml` file will be created in your working directory. Please, keep the indentation - that's very important for YAML to work correctly.
 
 Find more about YAML:
 
@@ -34,3 +34,7 @@ Find more about YAML:
 - mission new - Adds a new mission
 - mission html - Exports the missions to an HTML file
 - mission help - Shows the help
+
+## Flags
+
+--path - Specify the directory where the data should be stored.
