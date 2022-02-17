@@ -12,7 +12,7 @@ import (
 )
 
 var data = `
-vars:
+replacements:
 missions:
 `
 

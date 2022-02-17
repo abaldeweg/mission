@@ -28,5 +28,5 @@ func List() {
 func getUnit(val string) string {
     missions := logfile.ParseYAML(logfile.ReadLogfile())
 
-    return missions.Vars[val]
+    return missions.Replacements[val]
 }

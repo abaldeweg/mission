@@ -8,7 +8,7 @@ import (
 )
 
 type Logfile struct {
-    Vars map[string]string
+    Replacements map[string]string
     Missions []Mission
 }
 
