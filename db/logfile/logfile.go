@@ -22,6 +22,11 @@ type Mission struct {
     Links []string
 }
 
+var data = `
+replacements:
+missions:
+`
+
 var path string
 
 func init() {
@@ -89,4 +94,8 @@ func ReadLogfile() []byte {
     }
 
     return data
+}
+
+func CreateTemplate() {
+    WriteLogfile(WriteYAML(ParseYAML([]byte(data))))
 }

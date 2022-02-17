@@ -11,11 +11,6 @@ import (
 	"os"
 )
 
-var data = `
-replacements:
-missions:
-`
-
 var dir string
 
 func init() {
@@ -33,7 +28,7 @@ func main() {
     logfile.SetPath(dir)
 
     if !logfile.HasLogfile() {
-        logfile.WriteLogfile(logfile.WriteYAML(logfile.ParseYAML([]byte(data))))
+        logfile.CreateTemplate()
     }
 
     action := "ls"
