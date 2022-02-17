@@ -37,4 +37,4 @@ Find more about YAML:
 
 ## Flags
 
---path - Specify the directory where the data should be stored.
+- --path - Specify the directory where the data should be stored.
