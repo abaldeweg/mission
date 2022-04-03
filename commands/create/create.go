@@ -26,5 +26,5 @@ func Create() {
 
     success := color.New(color.FgGreen)
     success.Println("A new mission was created.")
-    success.Printf("File: %s.\n", logfile.GetUrl())
+    success.Printf("File: %s\n", logfile.GetUrl())
 }
