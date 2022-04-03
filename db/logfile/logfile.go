@@ -9,6 +9,7 @@ import (
 )
 
 type Logfile struct {
+    Notes []string
     Replacements map[string]string
     Missions []Mission
 }
@@ -24,6 +25,7 @@ type Mission struct {
 }
 
 var data = `
+notes:
 replacements:
 missions:
 `
