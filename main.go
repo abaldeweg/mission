@@ -5,7 +5,7 @@ import (
 	"baldeweg/mission/commands/html"
 	"baldeweg/mission/commands/list"
 	"baldeweg/mission/dotenv"
-	"baldeweg/mission/db/logfile"
+	"baldeweg/mission/logfile"
 	"baldeweg/mission/storage/file"
 	"flag"
 	"fmt"

@@ -1,7 +1,7 @@
 package list
 
 import (
-	"baldeweg/mission/db/logfile"
+	"baldeweg/mission/logfile"
 	"baldeweg/mission/util"
 	"log"
 	"os"
