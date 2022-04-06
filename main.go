@@ -4,7 +4,7 @@ import (
 	"baldeweg/mission/commands/create"
 	"baldeweg/mission/commands/html"
 	"baldeweg/mission/commands/list"
-	"baldeweg/mission/db/dotenv"
+	"baldeweg/mission/dotenv"
 	"baldeweg/mission/db/logfile"
 	"baldeweg/mission/storage/file"
 	"flag"
