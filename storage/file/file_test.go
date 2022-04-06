@@ -1,8 +1,8 @@
-package logfile
+package file
 
 import (
-    "testing"
-    "reflect"
+	"reflect"
+	"testing"
 )
 
 func TestConfig(t *testing.T) {

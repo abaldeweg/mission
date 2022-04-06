@@ -2,6 +2,7 @@ package create
 
 import (
 	"baldeweg/mission/db/logfile"
+	"baldeweg/mission/storage/file"
 	"baldeweg/mission/util"
 	"log"
 	"time"
@@ -27,5 +28,5 @@ func Create() {
 
     success := color.New(color.FgGreen)
     success.Println("A new mission was created.")
-    success.Printf("File: %s\n", logfile.GetUrl())
+    success.Printf("File: %s\n", file.GetUrl())
 }

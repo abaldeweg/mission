@@ -2,6 +2,7 @@ package html
 
 import (
 	"baldeweg/mission/db/logfile"
+	"baldeweg/mission/storage/file"
 	"baldeweg/mission/util"
 	"html/template"
 	"log"
@@ -89,5 +90,5 @@ func getUnit(val string) string {
 }
 
 func getUrl() string {
-    return path.Join(logfile.GetPath(), "missions.html")
+    return path.Join(file.GetPath(), "missions.html")
 }

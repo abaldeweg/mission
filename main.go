@@ -6,6 +6,7 @@ import (
 	"baldeweg/mission/commands/list"
 	"baldeweg/mission/db/dotenv"
 	"baldeweg/mission/db/logfile"
+	"baldeweg/mission/storage/file"
 	"flag"
 	"fmt"
 	"log"
@@ -27,7 +28,7 @@ func main() {
     dotenv.Load()
     flag.Parse()
 
-    logfile.SetPath(dir)
+    file.SetPath(dir)
     if !logfile.HasLogfile() {
         logfile.CreateTemplate()
     }
