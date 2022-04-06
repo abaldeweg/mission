@@ -1,7 +1,7 @@
 package logfile
 
 import (
-	"baldeweg/mission/db/bucket"
+	"baldeweg/mission/storage/bucket"
 	"baldeweg/mission/storage/file"
 	"baldeweg/mission/util"
 	"fmt"
