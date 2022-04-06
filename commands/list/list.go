@@ -2,6 +2,7 @@ package list
 
 import (
 	"baldeweg/mission/db/logfile"
+	"baldeweg/mission/util"
 	"log"
 	"os"
 
@@ -17,7 +18,7 @@ func List() {
     table := tablewriter.NewWriter(os.Stdout)
     table.SetHeader([]string{"Date", "Time", "Unit", "Keyword", "Situation", "Location"})
 
-    data := logfile.ParseYAML(logfile.ReadLogfile())
+    data := util.ParseYAML(logfile.ReadLogfile())
     for _, v := range data.Missions {
         table.Append([]string{v.Date, v.Time, getUnit(v.Unit), v.Keyword, v.Situation, v.Location})
     }
@@ -26,7 +27,7 @@ func List() {
 }
 
 func getUnit(val string) string {
-    missions := logfile.ParseYAML(logfile.ReadLogfile())
+    missions := util.ParseYAML(logfile.ReadLogfile())
 
     return missions.Replacements[val]
 }
