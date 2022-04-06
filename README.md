@@ -28,6 +28,22 @@ Find more about YAML:
 - [yaml.org](https://yaml.org/)
 - [Wikipedia](https://en.m.wikipedia.org/wiki/YAML)
 
+## Storage
+
+Create a `.env` file to define where to store the logfile.
+
+```env
+// .env
+
+STORAGE=bucket
+BUCKET_NAME=name
+GOOGLE_APPLICATION_CREDENTIALS=service-account-file.json
+```
+
+- STORAGE - Can be file or bucket
+- BUCKET_NAME - If bucket was chosen as storage, then define the bucket name.
+- GOOGLE_APPLICATION_CREDENTIALS - Key File, only for buckets
+
 ## Commands
 
 - mission ls - Lists all missions
@@ -37,4 +53,4 @@ Find more about YAML:
 
 ## Flags
 
-- --path - Specify the directory where the data should be stored.
+- `--path` - Specify the directory where the data should be stored.

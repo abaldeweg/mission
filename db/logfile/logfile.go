@@ -1,6 +1,8 @@
 package logfile
 
 import (
+	"baldeweg/mission/db/bucket"
+	"fmt"
 	"log"
 	"os"
 	"path"
@@ -76,27 +78,55 @@ func WriteYAML(t Logfile) []byte {
 }
 
 func HasLogfile() bool {
-    if _, err := os.Stat(GetUrl()); err == nil {
-        return true
+    storage := os.Getenv("STORAGE")
+
+    if storage == "file" {
+        if _, err := os.Stat(GetUrl()); err == nil {
+            return true
+        }
+
+        return false
+    }
+
+    if storage == "bucket" {
+        return bucket.Exists(os.Getenv("BUCKET_NAME"), "missions.yaml")
     }
 
     return false
 }
 
 func WriteLogfile(content []byte) {
-    err := os.WriteFile(GetUrl(), content, 0644)
-    if err != nil {
-        log.Fatal(err)
+    storage := os.Getenv("STORAGE")
+
+    if storage == "file" {
+        err := os.WriteFile(GetUrl(), content, 0644)
+        if err != nil {
+            log.Fatal(err)
+        }
+    }
+
+    if storage == "bucket" {
+        bucket.Write(os.Getenv("BUCKET_NAME"), "missions.yaml", fmt.Sprintf("%s", content))
     }
 }
 
 func ReadLogfile() []byte {
-    data, err := os.ReadFile(GetUrl())
-    if err != nil {
-        log.Fatal(err)
+    var d []byte
+    storage := os.Getenv("STORAGE")
+
+    if storage == "file" {
+        data, err := os.ReadFile(GetUrl())
+        if err != nil {
+            log.Fatal(err)
+        }
+        d = data
     }
 
-    return data
+    if storage == "bucket" {
+        d = bucket.Read(os.Getenv("BUCKET_NAME"), "missions.yaml")
+    }
+
+    return d
 }
 
 func CreateTemplate() {

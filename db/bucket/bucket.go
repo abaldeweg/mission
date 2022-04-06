@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"os"
 
 	"cloud.google.com/go/storage"
 )
@@ -31,7 +30,7 @@ func Write(bucket, object, content string) {
     }
 }
 
-func Read(bucket, object string) {
+func Read(bucket, object string) []byte {
     ctx, storageClient := client()
     defer storageClient.Close()
 
@@ -42,9 +41,27 @@ func Read(bucket, object string) {
     if err != nil {
         log.Fatal(err)
     }
-    if _, err := io.Copy(os.Stdout, r); err != nil {
+    data, err := io.ReadAll(r);
+    if err != nil {
         log.Fatal(err)
     }
+
+    return data
+}
+
+func Exists(bucket, object string) bool {
+    ctx, storageClient := client()
+    defer storageClient.Close()
+
+    _, err := storageClient.Bucket(bucket).Object(object).Attrs(ctx)
+    if err == storage.ErrObjectNotExist {
+        return false
+    }
+    if err != nil {
+        return false
+    }
+
+    return true
 }
 
 func client() (context.Context, *storage.Client) {
