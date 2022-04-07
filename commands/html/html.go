@@ -3,7 +3,7 @@ package html
 import (
 	"baldeweg/mission/logfile"
 	"baldeweg/mission/storage/file"
-	"baldeweg/mission/util"
+	"baldeweg/mission/parseYaml"
 	"html/template"
 	"log"
 	"os"
@@ -33,7 +33,7 @@ const tpl = `<!DOCTYPE html>
 
 type T struct {
     Title string
-    Missions []util.Mission
+    Missions []parseYaml.Mission
 }
 
 func init() {
@@ -42,7 +42,7 @@ func init() {
 }
 
 func Export() {
-    missions := util.ParseYAML(logfile.ReadLogfile())
+    missions := parseYaml.ParseYAML(logfile.ReadLogfile())
 
 	render(T{
 		Title: "Missions Log",
@@ -84,7 +84,7 @@ func formatDate(val string) string {
 }
 
 func getUnit(val string) string {
-    missions := util.ParseYAML(logfile.ReadLogfile())
+    missions := parseYaml.ParseYAML(logfile.ReadLogfile())
 
     return missions.Replacements[val]
 }

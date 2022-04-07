@@ -1,9 +1,9 @@
 package logfile
 
 import (
+	"baldeweg/mission/parseYaml"
 	"baldeweg/mission/storage/bucket"
 	"baldeweg/mission/storage/file"
-	"baldeweg/mission/util"
 	"fmt"
 	"log"
 	"os"
@@ -54,5 +54,5 @@ func ReadLogfile() []byte {
 }
 
 func CreateTemplate() {
-    WriteLogfile(util.Template())
+    WriteLogfile(parseYaml.Template())
 }

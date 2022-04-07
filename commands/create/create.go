@@ -3,7 +3,7 @@ package create
 import (
 	"baldeweg/mission/logfile"
 	"baldeweg/mission/storage/file"
-	"baldeweg/mission/util"
+	"baldeweg/mission/parseYaml"
 	"log"
 	"time"
 
@@ -16,15 +16,15 @@ func init() {
 }
 
 func Create() {
-    create := util.Mission{
+    create := parseYaml.Mission{
         Date: time.Now().Format("2006-01-02"),
         Time: time.Now().Format("15:04"),
     }
 
-    t := util.ParseYAML(logfile.ReadLogfile())
+    t := parseYaml.ParseYAML(logfile.ReadLogfile())
     t.Missions = append(t.Missions, create)
 
-    logfile.WriteLogfile(util.WriteYAML(t))
+    logfile.WriteLogfile(parseYaml.WriteYAML(t))
 
     success := color.New(color.FgGreen)
     success.Println("A new mission was created.")

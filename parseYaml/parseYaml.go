@@ -1,4 +1,4 @@
-package util
+package parseYaml
 
 import (
 	"log"
@@ -29,7 +29,7 @@ missions:
 `
 
 func init() {
-    log.SetPrefix("util: ")
+    log.SetPrefix("parseYaml: ")
     log.SetFlags(0)
 }
 
