@@ -35,11 +35,11 @@ func Read(blob string) Logfile {
     return d
 }
 
-func Write(d Logfile) []byte {
-	data, err := json.Marshal(&d)
+func Write(data Logfile) []byte {
+	d, err := json.Marshal(&data)
     if err != nil {
         log.Fatal(err)
     }
 
-    return data
+    return d
 }
