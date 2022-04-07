@@ -1,33 +1,18 @@
 package parseJson
 
 import (
+	"baldeweg/mission/filetypes"
 	"encoding/json"
 	"log"
 )
-
-type Logfile struct {
-    Notes []string
-    Replacements map[string]string
-    Missions []Mission
-}
-
-type Mission struct {
-    Date string
-    Time string
-    Keyword string
-    Situation string
-    Unit string
-    Location string
-    Links []string
-}
 
 func init() {
     log.SetPrefix("parseJson: ")
     log.SetFlags(0)
 }
 
-func Read(blob string) Logfile {
-    var d Logfile
+func Read(blob string) filetypes.Logfile {
+    var d filetypes.Logfile
 	if err := json.Unmarshal([]byte(blob), &d); err != nil {
 		log.Fatal(err)
 	}
@@ -35,7 +20,7 @@ func Read(blob string) Logfile {
     return d
 }
 
-func Write(data Logfile) []byte {
+func Write(data interface{}) []byte {
 	d, err := json.Marshal(&data)
     if err != nil {
         log.Fatal(err)

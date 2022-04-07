@@ -1,9 +1,10 @@
 package html
 
 import (
+	"baldeweg/mission/filetypes"
 	"baldeweg/mission/logfile"
-	"baldeweg/mission/storage/file"
 	"baldeweg/mission/parseYaml"
+	"baldeweg/mission/storage/file"
 	"html/template"
 	"log"
 	"os"
@@ -33,7 +34,7 @@ const tpl = `<!DOCTYPE html>
 
 type T struct {
     Title string
-    Missions []parseYaml.Mission
+    Missions []filetypes.Mission
 }
 
 func init() {

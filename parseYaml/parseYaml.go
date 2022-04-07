@@ -1,26 +1,11 @@
 package parseYaml
 
 import (
+	"baldeweg/mission/filetypes"
 	"log"
 
 	"gopkg.in/yaml.v3"
 )
-
-type Logfile struct {
-    Notes []string
-    Replacements map[string]string
-    Missions []Mission
-}
-
-type Mission struct {
-    Date string
-    Time string
-    Keyword string
-    Situation string
-    Unit string
-    Location string
-    Links []string
-}
 
 var data = `
 notes:
@@ -33,8 +18,8 @@ func init() {
     log.SetFlags(0)
 }
 
-func ParseYAML(d []byte) Logfile {
-    t := Logfile{}
+func ParseYAML(d []byte) filetypes.Logfile {
+    t := filetypes.Logfile{}
 
     err := yaml.Unmarshal([]byte(d), &t)
     if err != nil {
@@ -44,7 +29,7 @@ func ParseYAML(d []byte) Logfile {
     return t
 }
 
-func WriteYAML(t Logfile) []byte {
+func WriteYAML(t filetypes.Logfile) []byte {
     d, err := yaml.Marshal(t)
     if err != nil {
         log.Fatalf("error: %v", err)

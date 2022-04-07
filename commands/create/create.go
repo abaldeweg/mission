@@ -1,9 +1,10 @@
 package create
 
 import (
+	"baldeweg/mission/filetypes"
 	"baldeweg/mission/logfile"
-	"baldeweg/mission/storage/file"
 	"baldeweg/mission/parseYaml"
+	"baldeweg/mission/storage/file"
 	"log"
 	"time"
 
@@ -16,7 +17,7 @@ func init() {
 }
 
 func Create() {
-    create := parseYaml.Mission{
+    create := filetypes.Mission{
         Date: time.Now().Format("2006-01-02"),
         Time: time.Now().Format("15:04"),
     }
