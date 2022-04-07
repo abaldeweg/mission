@@ -25,23 +25,23 @@ func init() {
 }
 
 func Web() {
-    http.HandleFunc("/list", makeHandler(listHandler))
-    http.HandleFunc("/create", makeHandler(createHandler))
-    http.HandleFunc("/update", makeHandler(updateHandler))
+    http.HandleFunc("/list", makeHandler(listHandler, "GET"))
+    http.HandleFunc("/create", makeHandler(createHandler, "POST"))
+    http.HandleFunc("/update", makeHandler(updateHandler, "PUT"))
 
     log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func listHandler(w http.ResponseWriter, r *http.Request) {
-    p := string(parseJson.Write(parseYaml.ParseYAML(logfile.ReadLogfile())))
-    io.WriteString(w, p)
+    c := string(parseJson.Write(parseYaml.ParseYAML(logfile.ReadLogfile())))
+    io.WriteString(w, c)
 }
 
 func createHandler(w http.ResponseWriter, r *http.Request) {
     create.Create()
 
-    p := string(parseJson.Write(filetypes.Msg{Msg: "SUCCESS"}))
-    io.WriteString(w, p)
+    c := string(parseJson.Write(filetypes.Msg{Msg: "SUCCESS"}))
+    io.WriteString(w, c)
 }
 
 func updateHandler(w http.ResponseWriter, r *http.Request) {
@@ -49,15 +49,20 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
     if err != nil {
         log.Fatal(err)
     }
-    p := &Page{Title: "Update", Body: body}
-    logfile.WriteLogfile(p.Body)
+
+    logfile.WriteLogfile(body)
 
     c := string(parseJson.Write(filetypes.Msg{Msg: "SUCCESS"}))
     io.WriteString(w, c)
 }
 
-func makeHandler(fn func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
+func makeHandler(fn func(http.ResponseWriter, *http.Request), method string) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
+        if method != r.Method {
+            http.NotFound(w, r)
+            return
+        }
+
         m := validPath.FindStringSubmatch(r.URL.Path)
         if m == nil {
             http.NotFound(w, r)
