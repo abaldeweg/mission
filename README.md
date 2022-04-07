@@ -49,6 +49,7 @@ GOOGLE_APPLICATION_CREDENTIALS=service-account-file.json
 - mission ls - Lists all missions
 - mission new - Adds a new mission
 - mission html - Exports the missions to an HTML file
+- mission web - Starts the webserver
 - mission help - Shows the help
 
 ## Flags

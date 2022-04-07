@@ -7,6 +7,7 @@ import (
 	"baldeweg/mission/dotenv"
 	"baldeweg/mission/logfile"
 	"baldeweg/mission/storage/file"
+	"baldeweg/mission/web"
 	"flag"
 	"fmt"
 	"log"
@@ -45,6 +46,8 @@ func main() {
         create.Create()
     case "html":
         html.Export()
+    case "web":
+        web.Web()
     case "help":
         fmt.Println("baldeweg/mission")
         fmt.Println("A baldeweg OpenSource project")
@@ -54,6 +57,7 @@ func main() {
         fmt.Println("mission ls - Lists all missions")
         fmt.Println("mission new - Adds a new mission")
         fmt.Println("mission html - Exports the missions to an HTML file")
+        fmt.Println("mission web - Starts the webserver")
         fmt.Println("mission help - Shows the help")
     default:
         list.List()
