@@ -4,7 +4,6 @@ import (
 	"baldeweg/mission/parseYaml"
 	"baldeweg/mission/storage/bucket"
 	"baldeweg/mission/storage/file"
-	"fmt"
 	"log"
 	"os"
 )
@@ -34,8 +33,7 @@ func WriteLogfile(content []byte) {
         file.Write(content)
     }
     if storage == "bucket" {
-        //lint:ignore S1025 String() does not work as expected
-        bucket.Write(os.Getenv("BUCKET_NAME"), "missions.yaml", fmt.Sprintf("%s", content))
+        bucket.Write(os.Getenv("BUCKET_NAME"), "missions.yaml", string(content))
     }
 }
 
