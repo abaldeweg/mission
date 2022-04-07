@@ -47,6 +47,10 @@ func main() {
     case "html":
         html.Export()
     case "web":
+        fmt.Println("baldeweg/mission")
+        fmt.Println("A baldeweg OpenSource project")
+        fmt.Println("https://github.com/abaldeweg/mission")
+
         web.Web()
     case "help":
         fmt.Println("baldeweg/mission")
