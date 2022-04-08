@@ -3,7 +3,7 @@ package html
 import (
 	"baldeweg/mission/filetypes"
 	"baldeweg/mission/logfile"
-	"baldeweg/mission/parseYaml"
+	"baldeweg/mission/parseJson"
 	"baldeweg/mission/storage/file"
 	"html/template"
 	"log"
@@ -43,7 +43,7 @@ func init() {
 }
 
 func Export() {
-    missions := parseYaml.ParseYAML(logfile.ReadLogfile())
+    missions := parseJson.Read(string(logfile.ReadLogfile()))
 
 	render(T{
 		Title: "Missions Log",
@@ -85,7 +85,7 @@ func formatDate(val string) string {
 }
 
 func getUnit(val string) string {
-    missions := parseYaml.ParseYAML(logfile.ReadLogfile())
+    missions := parseJson.Read(string(logfile.ReadLogfile()))
 
     return missions.Replacements[val]
 }

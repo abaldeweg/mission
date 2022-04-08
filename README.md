@@ -19,9 +19,9 @@ Inside the project directory, you can build the app with the `go build` command.
 
 Run the command `mission`. Depending on the OS you need to add a file extension.
 
-The app will create a log file and add a template for every new mission. The details needs to be added to the `missions.yaml` directly via an editor.
+The app will create a log file and add a template for every new mission. The details needs to be added to the `missions.json` directly via an editor.
 
-The `missions.yaml` file will be created in your working directory. Please, keep the indentation - that's very important for YAML to work correctly.
+The `missions.json` file will be created in your working directory. Please, keep the indentation - that's very important for YAML to work correctly.
 
 Find more about YAML:
 

@@ -28,7 +28,7 @@ func GetPath() string {
 }
 
 func GetUrl() string {
-    return path.Join(GetPath(), "missions.yaml")
+    return path.Join(GetPath(), "missions.json")
 }
 
 func Exists() bool {

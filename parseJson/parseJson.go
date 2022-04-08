@@ -6,6 +6,8 @@ import (
 	"log"
 )
 
+var data = `{"notes":[],"replacements":{},"missions":[]}`
+
 func init() {
     log.SetPrefix("parseJson: ")
     log.SetFlags(0)
@@ -27,4 +29,8 @@ func Write(data interface{}) []byte {
     }
 
     return d
+}
+
+func Template() []byte {
+    return Write(data)
 }

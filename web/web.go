@@ -5,7 +5,6 @@ import (
 	"baldeweg/mission/filetypes"
 	"baldeweg/mission/logfile"
 	"baldeweg/mission/parseJson"
-	"baldeweg/mission/parseYaml"
 	"io"
 	"log"
 	"net/http"
@@ -33,7 +32,7 @@ func Web() {
 }
 
 func listHandler(w http.ResponseWriter, r *http.Request) {
-    c := string(parseJson.Write(parseYaml.ParseYAML(logfile.ReadLogfile())))
+    c := string(parseJson.Write(parseJson.Read(string(logfile.ReadLogfile()))))
     io.WriteString(w, c)
 }
 

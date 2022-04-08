@@ -1,7 +1,7 @@
 package logfile
 
 import (
-	"baldeweg/mission/parseYaml"
+	"baldeweg/mission/parseJson"
 	"baldeweg/mission/storage/bucket"
 	"baldeweg/mission/storage/file"
 	"log"
@@ -20,7 +20,7 @@ func HasLogfile() bool {
         return file.Exists()
     }
     if storage == "bucket" {
-        return bucket.Exists(os.Getenv("BUCKET_NAME"), "missions.yaml")
+        return bucket.Exists(os.Getenv("BUCKET_NAME"), "missions.json")
     }
 
     return false
@@ -33,7 +33,7 @@ func WriteLogfile(content []byte) {
         file.Write(content)
     }
     if storage == "bucket" {
-        bucket.Write(os.Getenv("BUCKET_NAME"), "missions.yaml", string(content))
+        bucket.Write(os.Getenv("BUCKET_NAME"), "missions.json", string(content))
     }
 }
 
@@ -45,12 +45,12 @@ func ReadLogfile() []byte {
         d = file.Read()
     }
     if storage == "bucket" {
-        d = bucket.Read(os.Getenv("BUCKET_NAME"), "missions.yaml")
+        d = bucket.Read(os.Getenv("BUCKET_NAME"), "missions.json")
     }
 
     return d
 }
 
 func CreateTemplate() {
-    WriteLogfile(parseYaml.Template())
+    WriteLogfile(parseJson.Template())
 }
