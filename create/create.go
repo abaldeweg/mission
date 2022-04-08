@@ -4,7 +4,6 @@ import (
 	"baldeweg/mission/filetypes"
 	"baldeweg/mission/logfile"
 	"baldeweg/mission/parseJson"
-	"baldeweg/mission/storage/file"
 	"log"
 	"time"
 
@@ -29,5 +28,4 @@ func Create() {
 
     success := color.New(color.FgGreen)
     success.Println("A new mission was created.")
-    success.Printf("File: %s\n", file.GetUrl())
 }

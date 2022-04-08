@@ -1,7 +1,7 @@
 package web
 
 import (
-	"baldeweg/mission/commands/create"
+	"baldeweg/mission/create"
 	"baldeweg/mission/filetypes"
 	"baldeweg/mission/logfile"
 	"baldeweg/mission/parseJson"

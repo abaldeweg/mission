@@ -44,14 +44,6 @@ GOOGLE_APPLICATION_CREDENTIALS=service-account-file.json
 - BUCKET_NAME - If bucket was chosen as storage, then define the bucket name.
 - GOOGLE_APPLICATION_CREDENTIALS - Key File, only for buckets
 
-## Commands
-
-- mission ls - Lists all missions
-- mission new - Adds a new mission
-- mission html - Exports the missions to an HTML file
-- mission web - Starts the webserver
-- mission help - Shows the help
-
 ## Flags
 
 - `--path` - Specify the directory where the data should be stored.

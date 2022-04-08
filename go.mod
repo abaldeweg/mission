@@ -6,8 +6,6 @@ require (
 	cloud.google.com/go/storage v1.22.0
 	github.com/fatih/color v1.13.0
 	github.com/joho/godotenv v1.4.0
-	github.com/olekukonko/tablewriter v0.0.5
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
 
 require (
@@ -21,8 +19,6 @@ require (
 	github.com/googleapis/go-type-adapters v1.0.0 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
-	github.com/mattn/go-runewidth v0.0.13 // indirect
-	github.com/rivo/uniseg v0.2.0 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	golang.org/x/net v0.0.0-20220325170049-de3da57026de // indirect
 	golang.org/x/oauth2 v0.0.0-20220309155454-6242fa91716a // indirect

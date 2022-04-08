@@ -1,9 +1,6 @@
 package main
 
 import (
-	"baldeweg/mission/commands/create"
-	"baldeweg/mission/commands/html"
-	"baldeweg/mission/commands/list"
 	"baldeweg/mission/dotenv"
 	"baldeweg/mission/logfile"
 	"baldeweg/mission/storage/file"
@@ -34,36 +31,7 @@ func main() {
         logfile.CreateTemplate()
     }
 
-    action := "ls"
-    if len(flag.Args()) >= 1 {
-        action = flag.Args()[0]
-    }
+    fmt.Println("baldeweg/mission https://github.com/abaldeweg/mission")
 
-    switch action {
-    case "ls":
-        list.List()
-    case "new":
-        create.Create()
-    case "html":
-        html.Export()
-    case "web":
-        fmt.Println("baldeweg/mission")
-        fmt.Println("A baldeweg OpenSource project")
-        fmt.Println("https://github.com/abaldeweg/mission")
-
-        web.Web()
-    case "help":
-        fmt.Println("baldeweg/mission")
-        fmt.Println("A baldeweg OpenSource project")
-        fmt.Println("https://github.com/abaldeweg/mission")
-        fmt.Println("")
-        fmt.Println("Commands")
-        fmt.Println("mission ls - Lists all missions")
-        fmt.Println("mission new - Adds a new mission")
-        fmt.Println("mission html - Exports the missions to an HTML file")
-        fmt.Println("mission web - Starts the webserver")
-        fmt.Println("mission help - Shows the help")
-    default:
-        list.List()
-    }
+    web.Web()
 }
