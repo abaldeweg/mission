@@ -65,7 +65,7 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 
 func makeHandler(fn func(http.ResponseWriter, *http.Request), method string) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
-        if method != r.Method {
+        if r.Method != method && r.Method != "OPTIONS" {
             http.NotFound(w, r)
             return
         }
@@ -75,6 +75,11 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request), method string) htt
             http.NotFound(w, r)
             return
         }
+
+        w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
+        w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+        w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
         fn(w, r)
     }
 }
