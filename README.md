@@ -21,12 +21,12 @@ Run the command `mission`. Depending on the OS you need to add a file extension.
 
 The app will create a log file and add a template for every new mission. The details needs to be added to the `missions.json` directly via an editor.
 
-The `missions.json` file will be created in your working directory. Please, keep the indentation - that's very important for YAML to work correctly.
+The `missions.json` file will be created in your working directory. Please, keep the indentation - that's very important for JSON to work correctly.
 
-Find more about YAML:
+Find more about JSON:
 
-- [yaml.org](https://yaml.org/)
-- [Wikipedia](https://en.m.wikipedia.org/wiki/YAML)
+- [json.org](https://www.json.org/json-en.html)
+- [Wikipedia](https://en.m.wikipedia.org/wiki/JSON)
 
 ## Storage
 
