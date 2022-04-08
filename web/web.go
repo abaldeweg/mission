@@ -1,7 +1,6 @@
 package web
 
 import (
-	"baldeweg/mission/create"
 	"baldeweg/mission/filetypes"
 	"baldeweg/mission/logfile"
 	"baldeweg/mission/parseJson"
@@ -9,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"regexp"
+	"time"
 )
 
 type Page struct {
@@ -37,7 +37,15 @@ func listHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func createHandler(w http.ResponseWriter, r *http.Request) {
-    create.Create()
+    create := filetypes.Mission{
+        Date: time.Now().Format("2006-01-02"),
+        Time: time.Now().Format("15:04"),
+    }
+
+    t := parseJson.Read(string(logfile.ReadLogfile()))
+    t.Missions = append(t.Missions, create)
+
+    logfile.WriteLogfile(parseJson.Write(t))
 
     c := string(parseJson.Write(filetypes.Msg{Msg: "SUCCESS"}))
     io.WriteString(w, c)
