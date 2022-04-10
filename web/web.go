@@ -4,19 +4,16 @@ import (
 	"baldeweg/mission/filetypes"
 	"baldeweg/mission/logfile"
 	"baldeweg/mission/parseJson"
+	"context"
 	"io"
 	"log"
 	"net/http"
-	"regexp"
+	"strings"
 	"time"
+
+	firebase "firebase.google.com/go/v4"
+	"firebase.google.com/go/v4/auth"
 )
-
-type Page struct {
-    Title string
-    Body []byte
-}
-
-var validPath = regexp.MustCompile("^/(list|create|update)$")
 
 func init() {
     log.SetPrefix("web: ")
@@ -24,9 +21,9 @@ func init() {
 }
 
 func Web() {
-    http.HandleFunc("/list", makeHandler(listHandler, "GET"))
-    http.HandleFunc("/create", makeHandler(createHandler, "POST"))
-    http.HandleFunc("/update", makeHandler(updateHandler, "PUT"))
+    http.HandleFunc("/api/list", makeHandler(listHandler, "GET"))
+    http.HandleFunc("/api/create", makeHandler(createHandler, "POST"))
+    http.HandleFunc("/api/update", makeHandler(updateHandler, "PUT"))
 
     log.Fatal(http.ListenAndServe(":8080", nil))
 }
@@ -70,16 +67,44 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request), method string) htt
             return
         }
 
-        m := validPath.FindStringSubmatch(r.URL.Path)
-        if m == nil {
-            http.NotFound(w, r)
+        w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
+        w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+        w.Header().Set("Access-Control-Allow-Headers", "Authorization, Content-Type")
+        w.Header().Set("Content-Type", "application/json")
+
+        if r.Method == "OPTIONS" {
             return
         }
 
-        w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
-        w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-        w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+        auth := strings.Split(r.Header.Get("Authorization"), " ")
+        if len(auth) == 2 {
+            if _, err := checkToken(auth[1]); err != nil {
+                w.WriteHeader(401)
+                return
+            }
+        }
 
         fn(w, r)
     }
+}
+
+func checkToken(idToken string) (*auth.Token, error) {
+    ctx := context.Background()
+
+    app, err := firebase.NewApp(ctx, nil)
+    if err != nil {
+        return nil, err
+    }
+
+    client, err := app.Auth(ctx)
+    if err != nil {
+        return nil, err
+    }
+
+    token, err := client.VerifyIDTokenAndCheckRevoked(ctx, idToken)
+    if err != nil {
+        return nil, err
+    }
+
+    return token, nil
 }
