@@ -8,6 +8,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -67,7 +68,7 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request), method string) htt
             return
         }
 
-        w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
+        w.Header().Set("Access-Control-Allow-Origin", os.Getenv("CORS_ALLOW_ORIGIN"))
         w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
         w.Header().Set("Access-Control-Allow-Headers", "Authorization, Content-Type")
         w.Header().Set("Content-Type", "application/json")
