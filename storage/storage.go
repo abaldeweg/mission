@@ -25,20 +25,20 @@ func init() {
     log.SetFlags(0)
 }
 
-func Exists() bool {
-    return func(fn func(string) bool, filename string) bool {
-        return fn(filename)
-    }(Adapters[os.Getenv("STORAGE")].Exists, filename)
-}
-
 func Write(content []byte) {
     func(fn func(string, []byte), filename string, content []byte)  {
         fn(filename, content)
-    }(Adapters[os.Getenv("STORAGE")].Write, filename, content)
-}
+        }(Adapters[os.Getenv("STORAGE")].Write, filename, content)
+    }
 
 func Read() []byte {
     return func(fn func(string) []byte, filename string) []byte {
         return fn(filename)
     }(Adapters[os.Getenv("STORAGE")].Read, filename)
+}
+
+func Exists() bool {
+    return func(fn func(string) bool, filename string) bool {
+        return fn(filename)
+    }(Adapters[os.Getenv("STORAGE")].Exists, filename)
 }
