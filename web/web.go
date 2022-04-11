@@ -1,6 +1,7 @@
 package web
 
 import (
+	"baldeweg/mission/html"
 	"baldeweg/mission/logfile"
 	"baldeweg/mission/parseJson"
 	"context"
@@ -24,10 +25,16 @@ type Msg struct {
     Msg string `json:"msg"`
 }
 
+type Export struct {
+    Type string `json:"type"`
+    Body string `json:"body"`
+}
+
 func Web() {
     http.HandleFunc("/api/list", makeHandler(listHandler, "GET"))
     http.HandleFunc("/api/create", makeHandler(createHandler, "POST"))
     http.HandleFunc("/api/update", makeHandler(updateHandler, "PUT"))
+    http.HandleFunc("/api/export/html", makeHandler(htmlExportHandler, "GET"))
 
     log.Fatal(http.ListenAndServe(":8080", nil))
 }
@@ -61,6 +68,11 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
     logfile.WriteLogfile(body)
 
     c := string(parseJson.Write(Msg{Msg: "SUCCESS"}))
+    io.WriteString(w, c)
+}
+
+func htmlExportHandler(w http.ResponseWriter, r *http.Request) {
+    c := string(parseJson.Write(Export{Type: "html", Body: html.Export()}))
     io.WriteString(w, c)
 }
 
