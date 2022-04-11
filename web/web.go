@@ -1,10 +1,11 @@
 package web
 
 import (
+	"baldeweg/mission/filetype"
 	"baldeweg/mission/html"
-	"baldeweg/mission/parseJson"
 	"baldeweg/mission/storage"
 	"context"
+	"encoding/json"
 	"io"
 	"log"
 	"net/http"
@@ -40,22 +41,22 @@ func Web() {
 }
 
 func listHandler(w http.ResponseWriter, r *http.Request) {
-    c := string(parseJson.Write(parseJson.Read(string(storage.Read()))))
+    c := string(storage.Read())
     io.WriteString(w, c)
 }
 
 func createHandler(w http.ResponseWriter, r *http.Request) {
-    create := parseJson.Mission{
+    create := filetype.Mission{
         Date: time.Now().Format("2006-01-02"),
         Time: time.Now().Format("15:04"),
     }
 
-    t := parseJson.Read(string(storage.Read()))
+    t := Read(string(storage.Read()))
     t.Missions = append(t.Missions, create)
 
-    storage.Write(parseJson.Write(t))
+    storage.Write(Write(t))
 
-    c := string(parseJson.Write(Msg{Msg: "SUCCESS"}))
+    c := string(Write(Msg{Msg: "SUCCESS"}))
     io.WriteString(w, c)
 }
 
@@ -67,12 +68,12 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 
     storage.Write(body)
 
-    c := string(parseJson.Write(Msg{Msg: "SUCCESS"}))
+    c := string(Write(Msg{Msg: "SUCCESS"}))
     io.WriteString(w, c)
 }
 
 func htmlExportHandler(w http.ResponseWriter, r *http.Request) {
-    c := string(parseJson.Write(Export{Type: "html", Body: html.Export()}))
+    c := string(Write(Export{Type: "html", Body: html.Export()}))
     io.WriteString(w, c)
 }
 
@@ -123,4 +124,22 @@ func checkToken(idToken string) (*auth.Token, error) {
     }
 
     return token, nil
+}
+
+func Read(blob string) filetype.Logfile {
+    var d filetype.Logfile
+	if err := json.Unmarshal([]byte(blob), &d); err != nil {
+		log.Fatal(err)
+	}
+
+    return d
+}
+
+func Write(data interface{}) []byte {
+	d, err := json.Marshal(&data)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    return d
 }

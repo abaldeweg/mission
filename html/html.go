@@ -1,9 +1,10 @@
 package html
 
 import (
-	"baldeweg/mission/parseJson"
+	"baldeweg/mission/filetype"
 	"baldeweg/mission/storage"
 	"bytes"
+	"encoding/json"
 	"html/template"
 	"log"
 	"time"
@@ -22,7 +23,7 @@ func init() {
 
 func Export() string {
     var b bytes.Buffer
-    storage := parseJson.Read(string(storage.Read()))
+    storage := Read(string(storage.Read()))
 
     t, err := template.New("export").Funcs(template.FuncMap{
         "formatDate": formatDate,
@@ -49,7 +50,16 @@ func formatDate(val string) string {
 }
 
 func getUnit(val string) string {
-    missions := parseJson.Read(string(storage.Read()))
+    missions := Read(string(storage.Read()))
 
     return missions.Replacements[val]
+}
+
+func Read(blob string) filetype.Logfile {
+    var d filetype.Logfile
+	if err := json.Unmarshal([]byte(blob), &d); err != nil {
+		log.Fatal(err)
+	}
+
+    return d
 }
