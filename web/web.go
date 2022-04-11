@@ -1,7 +1,6 @@
 package web
 
 import (
-	"baldeweg/mission/filetypes"
 	"baldeweg/mission/logfile"
 	"baldeweg/mission/parseJson"
 	"context"
@@ -21,6 +20,10 @@ func init() {
     log.SetFlags(0)
 }
 
+type Msg struct {
+    Msg string `json:"msg"`
+}
+
 func Web() {
     http.HandleFunc("/api/list", makeHandler(listHandler, "GET"))
     http.HandleFunc("/api/create", makeHandler(createHandler, "POST"))
@@ -35,7 +38,7 @@ func listHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func createHandler(w http.ResponseWriter, r *http.Request) {
-    create := filetypes.Mission{
+    create := parseJson.Mission{
         Date: time.Now().Format("2006-01-02"),
         Time: time.Now().Format("15:04"),
     }
@@ -45,7 +48,7 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 
     logfile.WriteLogfile(parseJson.Write(t))
 
-    c := string(parseJson.Write(filetypes.Msg{Msg: "SUCCESS"}))
+    c := string(parseJson.Write(Msg{Msg: "SUCCESS"}))
     io.WriteString(w, c)
 }
 
@@ -57,7 +60,7 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 
     logfile.WriteLogfile(body)
 
-    c := string(parseJson.Write(filetypes.Msg{Msg: "SUCCESS"}))
+    c := string(parseJson.Write(Msg{Msg: "SUCCESS"}))
     io.WriteString(w, c)
 }
 

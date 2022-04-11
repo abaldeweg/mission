@@ -1,7 +1,6 @@
 package html
 
 import (
-	"baldeweg/mission/filetypes"
 	"baldeweg/mission/logfile"
 	"baldeweg/mission/parseJson"
 	"baldeweg/mission/storage/file"
@@ -34,7 +33,7 @@ const tpl = `<!DOCTYPE html>
 
 type T struct {
     Title string
-    Missions []filetypes.Mission
+    Missions []parseJson.Mission
 }
 
 func init() {
