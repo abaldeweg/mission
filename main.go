@@ -1,7 +1,6 @@
 package main
 
 import (
-	"baldeweg/mission/logfile"
 	"baldeweg/mission/storage/file"
 	"baldeweg/mission/web"
 	"flag"
@@ -33,9 +32,6 @@ func main() {
     flag.Parse()
 
     file.SetPath(dir)
-    if !logfile.HasLogfile() {
-        logfile.CreateTemplate()
-    }
 
     fmt.Println("baldeweg/mission https://github.com/abaldeweg/mission")
 

@@ -2,8 +2,8 @@ package web
 
 import (
 	"baldeweg/mission/html"
-	"baldeweg/mission/logfile"
 	"baldeweg/mission/parseJson"
+	"baldeweg/mission/storage"
 	"context"
 	"io"
 	"log"
@@ -40,7 +40,7 @@ func Web() {
 }
 
 func listHandler(w http.ResponseWriter, r *http.Request) {
-    c := string(parseJson.Write(parseJson.Read(string(logfile.ReadLogfile()))))
+    c := string(parseJson.Write(parseJson.Read(string(storage.Read()))))
     io.WriteString(w, c)
 }
 
@@ -50,10 +50,10 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
         Time: time.Now().Format("15:04"),
     }
 
-    t := parseJson.Read(string(logfile.ReadLogfile()))
+    t := parseJson.Read(string(storage.Read()))
     t.Missions = append(t.Missions, create)
 
-    logfile.WriteLogfile(parseJson.Write(t))
+    storage.Write(parseJson.Write(t))
 
     c := string(parseJson.Write(Msg{Msg: "SUCCESS"}))
     io.WriteString(w, c)
@@ -65,7 +65,7 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
         log.Fatal(err)
     }
 
-    logfile.WriteLogfile(body)
+    storage.Write(body)
 
     c := string(parseJson.Write(Msg{Msg: "SUCCESS"}))
     io.WriteString(w, c)
