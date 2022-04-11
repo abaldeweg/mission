@@ -1,8 +1,8 @@
 package web
 
 import (
+	"baldeweg/mission/export/html"
 	"baldeweg/mission/filetype"
-	"baldeweg/mission/html"
 	"baldeweg/mission/storage"
 	"context"
 	"encoding/json"
@@ -99,6 +99,9 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request), method string) htt
                 w.WriteHeader(401)
                 return
             }
+        } else {
+            w.WriteHeader(401)
+                return
         }
 
         fn(w, r)
