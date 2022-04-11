@@ -33,7 +33,7 @@ func main() {
 
     file.SetPath(dir)
 
-    fmt.Println("baldeweg/mission https://github.com/abaldeweg/mission")
+    fmt.Println("baldeweg/mission <https://github.com/abaldeweg/mission>")
 
     web.Web()
 }
