@@ -1,7 +1,6 @@
 package main
 
 import (
-	"baldeweg/mission/dotenv"
 	"baldeweg/mission/logfile"
 	"baldeweg/mission/storage/file"
 	"baldeweg/mission/web"
@@ -9,6 +8,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 var dir string
@@ -23,7 +24,12 @@ func init() {
 }
 
 func main() {
-    dotenv.Load()
+    if _, err := os.Stat("./.env"); err == nil {
+        if err := godotenv.Load(); err != nil {
+            log.Fatal("Error loading .env file")
+        }
+    }
+
     flag.Parse()
 
     file.SetPath(dir)
