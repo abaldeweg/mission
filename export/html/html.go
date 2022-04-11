@@ -10,6 +10,8 @@ import (
 	"time"
 )
 
+var filename = "missions.json"
+
 const tpl = `<ul>
     {{- range .Missions -}}
     <li>{{ formatDate .Date }} {{ getUnit .Unit }}: {{ .Situation }}, {{ .Location }}</li>
@@ -25,7 +27,7 @@ var file = storage.Read
 
 func Export() string {
     var b bytes.Buffer
-    storage := unmarshalJson(file())
+    storage := unmarshalJson(file(filename))
 
     t, err := template.New("export").Funcs(template.FuncMap{
         "formatDate": formatDate,

@@ -17,6 +17,8 @@ import (
 	"firebase.google.com/go/v4/auth"
 )
 
+var filename = "missions.json"
+
 func init() {
     log.SetPrefix("web: ")
     log.SetFlags(0)
@@ -41,7 +43,7 @@ func Web() {
 }
 
 func listHandler(w http.ResponseWriter, r *http.Request) {
-    c := string(storage.Read())
+    c := string(storage.Read(filename))
     io.WriteString(w, c)
 }
 
@@ -51,10 +53,10 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
         Time: time.Now().Format("15:04"),
     }
 
-    t := Read(string(storage.Read()))
+    t := Read(string(storage.Read(filename)))
     t.Missions = append(t.Missions, create)
 
-    storage.Write(Write(t))
+    storage.Write(filename, Write(t))
 
     c := string(Write(Msg{Msg: "SUCCESS"}))
     io.WriteString(w, c)
@@ -66,7 +68,7 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
         log.Fatal(err)
     }
 
-    storage.Write(body)
+    storage.Write(filename, body)
 
     c := string(Write(Msg{Msg: "SUCCESS"}))
     io.WriteString(w, c)

@@ -7,8 +7,6 @@ import (
 	"os"
 )
 
-var filename = "missions.json" // @fix
-
 type Adapter struct {
     Read func(string) []byte
     Write func(string, []byte)
@@ -25,19 +23,19 @@ func init() {
     log.SetFlags(0)
 }
 
-func Write(content []byte) {
+func Write(filename string, content []byte) {
     func(fn func(string, []byte), filename string, content []byte)  {
         fn(filename, content)
         }(Adapters[os.Getenv("STORAGE")].Write, filename, content)
     }
 
-func Read() []byte {
+func Read(filename string) []byte {
     return func(fn func(string) []byte, filename string) []byte {
         return fn(filename)
     }(Adapters[os.Getenv("STORAGE")].Read, filename)
 }
 
-func Exists() bool {
+func Exists(filename string) bool {
     return func(fn func(string) bool, filename string) bool {
         return fn(filename)
     }(Adapters[os.Getenv("STORAGE")].Exists, filename)
