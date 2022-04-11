@@ -1,9 +1,7 @@
 package main
 
 import (
-	"baldeweg/mission/storage/file"
 	"baldeweg/mission/web"
-	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -11,15 +9,9 @@ import (
 	"github.com/joho/godotenv"
 )
 
-var dir string
-
 func init() {
-    path, err := os.Getwd()
-    if err != nil {
-        log.Fatal(err)
-    }
-
-    flag.StringVar(&dir, "path", path, "Specify the directory where the data should be stored.")
+    log.SetPrefix("storage: ")
+    log.SetFlags(0)
 }
 
 func main() {
@@ -28,10 +20,6 @@ func main() {
             log.Fatal("Error loading .env file")
         }
     }
-
-    flag.Parse()
-
-    file.SetPath(dir)
 
     fmt.Println("baldeweg/mission <https://github.com/abaldeweg/mission>")
 
