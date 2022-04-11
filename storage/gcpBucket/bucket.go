@@ -1,4 +1,4 @@
-package bucket
+package gcpBucket
 
 import (
 	"context"
@@ -10,8 +10,10 @@ import (
 	"cloud.google.com/go/storage"
 )
 
+var filename = "missions.json" // @fix
+
 func init() {
-    log.SetPrefix("bucket: ")
+    log.SetPrefix("gcpBucket: ")
     log.SetFlags(0)
 }
 
@@ -19,11 +21,11 @@ func Write(content []byte) {
     ctx, storageClient := client()
     defer storageClient.Close()
 
-    bkt := storageClient.Bucket(os.Getenv("BUCKET_NAME"))
-    obj := bkt.Object("missions.json")
+    bkt := storageClient.Bucket(os.Getenv("GCP_BUCKET_NAME"))
+    obj := bkt.Object(filename)
 
     w := obj.NewWriter(ctx)
-    if _, err := fmt.Fprintf(w, string(content)); err != nil {
+    if _, err := fmt.Fprint(w, string(content)); err != nil {
         log.Fatal(err)
     }
     if err := w.Close(); err != nil {
@@ -35,8 +37,8 @@ func Read() []byte {
     ctx, storageClient := client()
     defer storageClient.Close()
 
-    bkt := storageClient.Bucket(os.Getenv("BUCKET_NAME"))
-    obj := bkt.Object("missions.json")
+    bkt := storageClient.Bucket(os.Getenv("GCP_BUCKET_NAME"))
+    obj := bkt.Object(filename)
 
     r, err := obj.NewReader(ctx)
     if err != nil {
@@ -54,7 +56,7 @@ func Exists() bool {
     ctx, storageClient := client()
     defer storageClient.Close()
 
-    _, err := storageClient.Bucket(os.Getenv("BUCKET_NAME")).Object("missions.json").Attrs(ctx)
+    _, err := storageClient.Bucket(os.Getenv("GCP_BUCKET_NAME")).Object(filename).Attrs(ctx)
     if err == storage.ErrObjectNotExist {
         return false
     }

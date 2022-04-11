@@ -1,8 +1,8 @@
 package storage
 
 import (
-	"baldeweg/mission/storage/bucket"
 	"baldeweg/mission/storage/file"
+	"baldeweg/mission/storage/gcpBucket"
 	"log"
 	"os"
 )
@@ -15,7 +15,7 @@ type Adapter struct {
 
 var Adapters = map[string]Adapter{
     "file":{file.Read, file.Write, file.Exists},
-    "bucket":{bucket.Read, bucket.Write, bucket.Exists},
+    "gcp-bucket":{gcpBucket.Read, gcpBucket.Write, gcpBucket.Exists},
 }
 
 func init() {
@@ -32,7 +32,7 @@ func existsHandler(fn func() bool) bool {
 }
 
 func Write(content []byte) {
-    writeHandler(Adapters[os.Getenv("STORAGE")].Write)
+    writeHandler(Adapters[os.Getenv("STORAGE")].Write)(content)
 }
 
 func writeHandler(fn func([]byte)) func([]byte) {

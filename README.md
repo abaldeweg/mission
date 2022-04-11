@@ -35,14 +35,14 @@ Create a `.env` file to define where to store the logfile.
 ```env
 // .env
 
-STORAGE=bucket
-BUCKET_NAME=name
+STORAGE=gcp-bucket
+GCP_BUCKET_NAME=name
 GOOGLE_APPLICATION_CREDENTIALS=service-account-file.json
 CORS_ALLOW_ORIGIN=http://localhost:8081
 ```
 
-- STORAGE - Can be file or bucket
-- BUCKET_NAME - If bucket was chosen as storage, then define the bucket name.
+- STORAGE - Can be file or gcp-bucket
+- GCP_BUCKET_NAME - If bucket was chosen as storage, then define the bucket name.
 - GOOGLE_APPLICATION_CREDENTIALS - Key File, for auth and buckets
 - CORS_ALLOW_ORIGIN - Allowed origins
 
