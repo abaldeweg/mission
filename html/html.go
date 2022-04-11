@@ -3,75 +3,40 @@ package html
 import (
 	"baldeweg/mission/logfile"
 	"baldeweg/mission/parseJson"
-	"baldeweg/mission/storage/file"
+	"bytes"
 	"html/template"
 	"log"
-	"os"
-	"path"
 	"time"
-
-	"github.com/fatih/color"
 )
 
-const tpl = `<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>{{ .Title }}</title>
-</head>
-<body>
-    <h1>{{ .Title }}</h1>
-    <ul>
-        {{- range .Missions -}}
-        <li>{{ formatDate .Date }} {{ getUnit .Unit }}: {{ .Situation }}, {{ .Location }}</li>
-        {{- end -}}
-    </ul>
-</body>
-</html>
-`
-
-type T struct {
-    Title string
-    Missions []parseJson.Mission
-}
+const tpl = `<ul>
+    {{- range .Missions -}}
+    <li>{{ formatDate .Date }} {{ getUnit .Unit }}: {{ .Situation }}, {{ .Location }}</li>
+    {{- end -}}
+</ul>`
 
 func init() {
     log.SetPrefix("html: ")
     log.SetFlags(0)
 }
 
-func Export() {
-    missions := parseJson.Read(string(logfile.ReadLogfile()))
+func Export() string {
+    var b bytes.Buffer
+    logfile := parseJson.Read(string(logfile.ReadLogfile()))
 
-	render(T{
-		Title: "Missions Log",
-		Missions: missions.Missions,
-	})
-
-    success := color.New(color.FgGreen)
-    success.Println("HTML export was successfull")
-    success.Printf("File: %s\n", getUrl())
-}
-
-func render(data T) {
     t, err := template.New("export").Funcs(template.FuncMap{
         "formatDate": formatDate,
         "getUnit": getUnit,
     }).Parse(tpl)
 	if err != nil {
-		log.Fatalf("error: %v", err)
+		log.Fatal(err)
 	}
 
-    f, err := os.Create(getUrl())
-    if err != nil {
+	if err = t.Execute(&b, logfile); err != nil {
         log.Fatal(err)
     }
 
-	err = t.Execute(f, data)
-    if err != nil {
-        log.Fatal(err)
-    }
+    return b.String()
 }
 
 func formatDate(val string) string {
@@ -87,8 +52,4 @@ func getUnit(val string) string {
     missions := parseJson.Read(string(logfile.ReadLogfile()))
 
     return missions.Replacements[val]
-}
-
-func getUrl() string {
-    return path.Join(file.GetPath(), "missions.html")
 }
