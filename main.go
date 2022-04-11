@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-    log.SetPrefix("storage: ")
+    log.SetPrefix("main: ")
     log.SetFlags(0)
 }
 
