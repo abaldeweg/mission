@@ -7,10 +7,12 @@ import (
 	"os"
 )
 
+var filename = "missions.json" // @fix
+
 type Adapter struct {
-    Read func() []byte
-    Write func([]byte)
-    Exists func() bool
+    Read func(string) []byte
+    Write func(string, []byte)
+    Exists func(string) bool
 }
 
 var Adapters = map[string]Adapter{
@@ -24,27 +26,19 @@ func init() {
 }
 
 func Exists() bool {
-    return existsHandler(Adapters[os.Getenv("STORAGE")].Exists)
-}
-
-func existsHandler(fn func() bool) bool {
-    return fn()
+    return func(fn func(string) bool, filename string) bool {
+        return fn(filename)
+    }(Adapters[os.Getenv("STORAGE")].Exists, filename)
 }
 
 func Write(content []byte) {
-    writeHandler(Adapters[os.Getenv("STORAGE")].Write)(content)
-}
-
-func writeHandler(fn func([]byte)) func([]byte) {
-    return func(content []byte) {
-        fn(content)
-    }
+    func(fn func(string, []byte), filename string, content []byte)  {
+        fn(filename, content)
+    }(Adapters[os.Getenv("STORAGE")].Write, filename, content)
 }
 
 func Read() []byte {
-    return readHandler(Adapters[os.Getenv("STORAGE")].Read)
-}
-
-func readHandler(fn func() []byte) []byte {
-    return fn()
+    return func(fn func(string) []byte, filename string) []byte {
+        return fn(filename)
+    }(Adapters[os.Getenv("STORAGE")].Read, filename)
 }

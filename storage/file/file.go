@@ -31,7 +31,7 @@ func GetUrl() string {
     return path.Join(GetPath(), "missions.json")
 }
 
-func Exists() bool {
+func Exists(filename string) bool {
     if _, err := os.Stat(GetUrl()); err == nil {
         return true
     }
@@ -39,14 +39,14 @@ func Exists() bool {
     return false
 }
 
-func Write(content []byte) {
+func Write(filename string, content []byte) {
     err := os.WriteFile(GetUrl(), content, 0644)
     if err != nil {
         log.Fatal(err)
     }
 }
 
-func Read() []byte {
+func Read(filename string) []byte {
     data, err := os.ReadFile(GetUrl())
     if err != nil {
         log.Fatal(err)

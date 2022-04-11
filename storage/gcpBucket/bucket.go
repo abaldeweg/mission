@@ -10,14 +10,12 @@ import (
 	"cloud.google.com/go/storage"
 )
 
-var filename = "missions.json" // @fix
-
 func init() {
     log.SetPrefix("gcpBucket: ")
     log.SetFlags(0)
 }
 
-func Write(content []byte) {
+func Write(filename string, content []byte) {
     ctx, storageClient := client()
     defer storageClient.Close()
 
@@ -33,7 +31,7 @@ func Write(content []byte) {
     }
 }
 
-func Read() []byte {
+func Read(filename string) []byte {
     ctx, storageClient := client()
     defer storageClient.Close()
 
@@ -52,7 +50,7 @@ func Read() []byte {
     return data
 }
 
-func Exists() bool {
+func Exists(filename string) bool {
     ctx, storageClient := client()
     defer storageClient.Close()
 
