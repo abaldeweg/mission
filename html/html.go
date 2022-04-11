@@ -21,9 +21,11 @@ func init() {
     log.SetFlags(0)
 }
 
+var file = storage.Read
+
 func Export() string {
     var b bytes.Buffer
-    storage := Read(string(storage.Read()))
+    storage := unmarshalJson(file())
 
     t, err := template.New("export").Funcs(template.FuncMap{
         "formatDate": formatDate,
@@ -50,12 +52,12 @@ func formatDate(val string) string {
 }
 
 func getUnit(val string) string {
-    missions := Read(string(storage.Read()))
+    missions := unmarshalJson(file())
 
     return missions.Replacements[val]
 }
 
-func Read(blob string) filetype.Logfile {
+func unmarshalJson(blob []byte) filetype.Logfile {
     var d filetype.Logfile
 	if err := json.Unmarshal([]byte(blob), &d); err != nil {
 		log.Fatal(err)
