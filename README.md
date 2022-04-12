@@ -2,6 +2,11 @@
 
 An app to administer a log file of missions.
 
+## Repositories
+
+- mission <https://github.com/abaldeweg/mission> - Backend
+- mission_ui <https://github.com/abaldeweg/mission_ui> - UI
+
 ## Requirements
 
 - [Go](https://go.dev/)
