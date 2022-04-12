@@ -11,7 +11,7 @@ func TestConfig(t *testing.T) {
     old := file
     defer func() { file = old }()
 
-    file = func() []byte {
+    file = func(string) []byte {
         d, err := json.Marshal(filetype.Logfile{Missions: []filetype.Mission{}})
         if err != nil {
             t.Fatal(err)
