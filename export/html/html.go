@@ -54,7 +54,7 @@ func formatDate(val string) string {
 }
 
 func getUnit(val string) string {
-    missions := unmarshalJson(file())
+    missions := unmarshalJson(file(filename))
 
     return missions.Replacements[val]
 }
