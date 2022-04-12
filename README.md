@@ -1,13 +1,10 @@
 # baldeweg/mission
 
-A CLI to administer a log file of missions.
-
-![Screenshot](screenshot.jpg)
+An app to administer a log file of missions.
 
 ## Requirements
 
 - [Go](https://go.dev/)
-- Basic knowledge about the command line
 
 ## Getting Started
 
@@ -19,18 +16,11 @@ Inside the project directory, you can build the app with the `go build` command.
 
 Run the command `mission`. Depending on the OS you need to add a file extension.
 
-The app will create a log file and add a template for every new mission. The details needs to be added to the `missions.json` directly via an editor.
-
-The `missions.json` file will be created in your working directory. Please, keep the indentation - that's very important for JSON to work correctly.
-
-Find more about JSON:
-
-- [json.org](https://www.json.org/json-en.html)
-- [Wikipedia](https://en.m.wikipedia.org/wiki/JSON)
+The app will create a log file and add a template for every new mission, where you can edit the missions.
 
 ## Storage
 
-Create a `.env` file to define where to store the logfile.
+Create a `.env` file to define some settings.
 
 ```env
 // .env
@@ -42,12 +32,8 @@ GOOGLE_APPLICATION_CREDENTIALS=service-account-file.json
 CORS_ALLOW_ORIGIN=http://localhost:8081
 ```
 
-- STORAGE - Can be file or gcp-bucket
+- STORAGE - Can be `file` or `gcp-bucket`
 - FILE_PATH - Path where to store the files, only for file storage
-- GCP_BUCKET_NAME - If bucket was chosen as storage, then define the bucket name.
-- GOOGLE_APPLICATION_CREDENTIALS - Key File, for auth and buckets
+- GCP_BUCKET_NAME - If `gcp-bucket` was chosen as storage, then define the bucket name.
+- GOOGLE_APPLICATION_CREDENTIALS - Key file, for auth and buckets
 - CORS_ALLOW_ORIGIN - Allowed origins
-
-## Flags
-
-- `--path` - Specify the directory where the data should be stored.
