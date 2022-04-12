@@ -28,13 +28,8 @@ type Msg struct {
     Msg string `json:"msg"`
 }
 
-type Export struct {
-    Type string `json:"type"`
-    Body string `json:"body"`
-}
-
 func Web() {
-    http.HandleFunc("/api/list", makeHandler(listHandler, "GET"))
+    http.HandleFunc("/api/show", makeHandler(showHandler, "GET"))
     http.HandleFunc("/api/create", makeHandler(createHandler, "POST"))
     http.HandleFunc("/api/update", makeHandler(updateHandler, "PUT"))
     http.HandleFunc("/api/export/html", makeHandler(htmlExportHandler, "GET"))
@@ -42,7 +37,7 @@ func Web() {
     log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-func listHandler(w http.ResponseWriter, r *http.Request) {
+func showHandler(w http.ResponseWriter, r *http.Request) {
     c := string(storage.Read(filename))
     io.WriteString(w, c)
 }
@@ -53,12 +48,12 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
         Time: time.Now().Format("15:04"),
     }
 
-    t := Read(string(storage.Read(filename)))
+    t := unmarshalJson(string(storage.Read(filename)))
     t.Missions = append(t.Missions, create)
 
-    storage.Write(filename, Write(t))
+    storage.Write(filename, marshalJson(t))
 
-    c := string(Write(Msg{Msg: "SUCCESS"}))
+    c := string(marshalJson(Msg{Msg: "SUCCESS"}))
     io.WriteString(w, c)
 }
 
@@ -70,12 +65,12 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 
     storage.Write(filename, body)
 
-    c := string(Write(Msg{Msg: "SUCCESS"}))
+    c := string(marshalJson(Msg{Msg: "SUCCESS"}))
     io.WriteString(w, c)
 }
 
 func htmlExportHandler(w http.ResponseWriter, r *http.Request) {
-    c := string(Write(Export{Type: "html", Body: html.Export()}))
+    c := string(marshalJson(filetype.Export{Type: "html", Body: html.Export()}))
     io.WriteString(w, c)
 }
 
@@ -95,19 +90,24 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request), method string) htt
             return
         }
 
-        auth := strings.Split(r.Header.Get("Authorization"), " ")
-        if len(auth) == 2 {
-            if _, err := checkToken(auth[1]); err != nil {
-                w.WriteHeader(401)
-                return
-            }
-        } else {
+        if !isAuthenticated(r.Header.Get("Authorization")) {
             w.WriteHeader(401)
-                return
+            return
         }
 
         fn(w, r)
     }
+}
+
+func isAuthenticated(auth string) bool {
+    token := strings.Split(auth, " ")
+    if len(token) == 2 {
+        if _, err := checkToken(token[1]); err == nil {
+            return true
+        }
+    }
+
+    return false
 }
 
 func checkToken(idToken string) (*auth.Token, error) {
@@ -131,7 +131,7 @@ func checkToken(idToken string) (*auth.Token, error) {
     return token, nil
 }
 
-func Read(blob string) filetype.Logfile {
+func unmarshalJson(blob string) filetype.Logfile {
     var d filetype.Logfile
 	if err := json.Unmarshal([]byte(blob), &d); err != nil {
 		log.Fatal(err)
@@ -140,7 +140,7 @@ func Read(blob string) filetype.Logfile {
     return d
 }
 
-func Write(data interface{}) []byte {
+func marshalJson(data interface{}) []byte {
 	d, err := json.Marshal(&data)
     if err != nil {
         log.Fatal(err)

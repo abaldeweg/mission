@@ -20,6 +20,11 @@ type Mission struct {
     Links []string `json:"links"`
 }
 
+type Export struct {
+    Type string `json:"type"`
+    Body string `json:"body"`
+}
+
 func init() {
     log.SetPrefix("filetype: ")
     log.SetFlags(0)
